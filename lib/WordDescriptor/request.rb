@@ -34,7 +34,11 @@ class WordDescriptor::Request
   end
 
   def params
-    "#{rel_jjb_param}#{max_count_param}#{rel_trg_param}"
+    p = ""
+    p += rel_jjb_param if @rel_jjb
+    p += max_count_param if @max_count
+    p += rel_trg_param if @rel_trg
+    p += metadata_param
   end
 
   def rel_jjb_param
@@ -47,5 +51,9 @@ class WordDescriptor::Request
 
   def rel_trg_param
     "&rel_trg=#{@rel_trg.gsub(/\s+/, '+')}" if @rel_trg
+  end
+
+  def metadata_param
+    "&md=dpsrf"
   end
 end
