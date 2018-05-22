@@ -39,6 +39,7 @@ class WordDescriptor::Request
     p += max_count_param if @max_count
     p += rel_trg_param if @rel_trg
     p += metadata_param
+    p += ipa_param
   end
 
   def rel_jjb_param
@@ -55,5 +56,9 @@ class WordDescriptor::Request
 
   def metadata_param
     "&md=dpsrf"
+  end
+
+  def ipa_param
+    "&ipa=1"
   end
 end
