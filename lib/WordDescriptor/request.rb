@@ -3,13 +3,19 @@ class WordDescriptor::Request
   include HTTParty
   include UpDupable
 
-  def initialize(rel_jjb: nil, max_count: nil, limit: nil)
+  def initialize(rel_jjb: nil, max_count: nil, limit: nil,
+                rel_trg: nil)
     @rel_jjb = rel_jjb
+    @rel_trg = rel_trg
     @max_count = max_count
   end
 
   def that_describe(noun)
     dup_and_update(rel_jjb: noun)
+  end
+
+  def that_are_triggered_by(word)
+    dup_and_update(rel_trg: word)
   end
 
   def limit(max_count)
@@ -28,7 +34,7 @@ class WordDescriptor::Request
   end
 
   def params
-    "#{rel_jjb_param}#{max_count_param}"
+    "#{rel_jjb_param}#{max_count_param}#{rel_trg_param}"
   end
 
   def rel_jjb_param
@@ -37,5 +43,9 @@ class WordDescriptor::Request
 
   def max_count_param
     "&max_count=#{@max_count}" if @max_count
+  end
+
+  def rel_trg_param
+    "&rel_trg=#{@rel_trg.gsub(/\s+/, '+')}" if @rel_trg
   end
 end
